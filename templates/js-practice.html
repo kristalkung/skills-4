@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <title>Practice JavaScript</title>
   <link rel="stylesheet" href="static/styles.css">
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -36,7 +40,11 @@
 
 <script>
   "use strict";
-  // code here for above problem
+  const button = document.querySelector('#popup-alert-button');
+  button.addEventListener( 'click', () => {
+    alert('This is a popup');
+  }
+  );
 </script>
 
 
@@ -78,9 +86,25 @@
 <script>
   "use strict";
 
-  // code here for the above problem
+  const secretLink = document.querySelector('#multiplying-form');
+
+  secretLink.addEventListener('click', (evt) => {
+    evt.preventDefault();
+
+    const multsOf = Number(document.querySelector('#mults-of').value);
+    const maxNum = Number(document.querySelector('#max').value);
+
+    let numList = [];
+    let i = multsOf;
+    while (i <= maxNum) {
+      numList.push(i);
+      i += multsOf;
+    }
+    console.log(numList);
+  });
 
 </script>
+
 
 <div class="hint">
   <div>
@@ -112,7 +136,9 @@
 
 <script>
   "use strict";
-  // code here for above problem
+  $('.find-me').on('click', () => {
+    alert('jQuery popup');
+  });
 </script>
 
 <div class="hint">
@@ -144,7 +170,9 @@
 
 <script>
   "use strict";
-  // put your code here
+  $('#make-a-porcupine').on('click', () => {
+    $('#cute-porcupine-image').delay(1000).fadeIn(400);
+  });
 </script>
 
 <div class="hint">
@@ -175,7 +203,22 @@
 
 <script>
   "use strict";
-  // put your code here
+  // $('#agreeable-form').on('submit', (evt) => {
+  //   evt.preventDefault();
+
+  //   let favFood = $('#favorite-food-input').val();
+
+  //   $('#agreeable-text').html('I like ${favFood} too');
+  // });
+
+  function agree(evt) {
+    evt.preventDefault();
+    let theirFood = $('#favorite-food-input').val();
+    $('#agreeable-text').html(`I like ${theirFood}, too!`);
+  }
+
+  $('#agreeable-form').on('submit', agree);
+
 </script>
 
 <div class="hint">
@@ -212,9 +255,36 @@
 <script>
   "use strict";
 
-    var PRIME_COLORS = ['orange', 'midnightblue', 'darkgoldenrod', 'green', 'purple'];
+  var PRIME_COLORS = ['orange', 'midnightblue', 'darkgoldenrod', 'green', 'purple'];
 
-  // put the rest of your code here
+  function isPrime(x) {
+  // is X prime?
+
+  for (let i = 2; i * i <= x; i++) {
+      if (x % i === 0) {
+          return false;
+      }
+  }
+  // We never found a divisor, so it's prime
+  return true;
+  }
+
+  function makePrimes(evt) {
+    let num = 2;     // find primes higher than 1
+    let numFound = 0;
+    $('#prime-circle-area').html('');
+    while (numFound < 5) {
+        if (isPrime(num)) {
+            $('#prime-circle-area').append(
+                `<div class='prime-circle' style='background-color:
+                ${PRIME_COLORS[numFound]}'>${num}</div>`);
+            numFound = numFound + 1;
+        }
+        num = num + 1;
+    }
+  }
+
+$('#make-prime-circles').on('click', makePrimes);
 </script>
 
 
@@ -261,7 +331,15 @@
     $("#puppies-go-here").append(puppyPhoto);
   }
 
-  // put your code here
+  $('#puppy-form').submit( function (evt) {
+    evt.preventDefault();
+
+    let numPuppies = $('#num-puppies').val();
+    let data = {'num-puppies': numPuppies};
+
+    $.get('/puppies.json', data, showPuppies);
+
+  });
 
 </script>
 
